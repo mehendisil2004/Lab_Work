@@ -8,27 +8,13 @@ private:
     double width;
 
 public:
-    Rectangle();
-    Rectangle(double length, double width);
-    double area() const;
+    Rectangle(double length=0.0, double width=0.0) : length(length), width(width) {}
+
+    double area()
+    {
+        return length*width;
+    }
 };
-
-Rectangle::Rectangle()
-{
-    this->length = 0.0;
-    this->width = 0.0;
-}
-
-Rectangle::Rectangle(double length, double width)
-{
-    this->length = length;
-    this->width = width;
-}
-
-double Rectangle::area() const
-{
-    return length*width;
-}
 
 int main() {
     double length, width;
