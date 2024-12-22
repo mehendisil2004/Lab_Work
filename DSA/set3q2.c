@@ -56,9 +56,25 @@ void printInOrder(struct TreeNode* node) {
 }
 
 int main() {
-    int inOrder[] = { 4, 2, 5, 1, 6, 3, 7 };
-    int preOrder[] = { 1, 2, 4, 5, 3, 6, 7 };
-    int n = sizeof(inOrder) / sizeof(inOrder[0]);
+    int n;
+
+    // Input the size of the arrays
+    printf("Enter the number of nodes in the tree: ");
+    scanf("%d", &n);
+
+    int inOrder[n], preOrder[n];
+
+    // Input the inorder traversal
+    printf("Enter the inorder traversal: ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &inOrder[i]);
+    }
+
+    // Input the preorder traversal
+    printf("Enter the preorder traversal: ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &preOrder[i]);
+    }
 
     int preIndex = 0;
     struct TreeNode* root = buildTree(inOrder, preOrder, 0, n - 1, &preIndex);
