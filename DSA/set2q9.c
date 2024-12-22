@@ -79,7 +79,7 @@ int dequeue(Queue* queue) {
 
     if (isEmpty(&queue->stack2)) {
         printf("Queue is empty. Cannot dequeue.\n");
-        return -1; // Return -1 to indicate empty queue
+        return -1; 
     }
 
     return pop(&queue->stack2);
@@ -95,7 +95,7 @@ int front(Queue* queue) {
 
     if (isEmpty(&queue->stack2)) {
         printf("Queue is empty. Cannot access front element.\n");
-        return -1; // Return -1 to indicate empty queue
+        return -1; 
     }
 
     return peek(&queue->stack2);
@@ -110,22 +110,49 @@ bool isQueueEmpty(Queue* queue) {
 int main() {
     Queue queue;
     initQueue(&queue);
+    int choice, value;
 
-    enqueue(&queue, 10);
-    enqueue(&queue, 20);
-    enqueue(&queue, 30);
+    while (1) {
+        printf("\nMenu:\n");
+        printf("1. Enqueue\n");
+        printf("2. Dequeue\n");
+        printf("3. Get Front Element\n");
+        printf("4. Check if Queue is Empty\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-    printf("Front element: %d\n", front(&queue));
-    printf("Dequeued: %d\n", dequeue(&queue));
-    printf("Dequeued: %d\n", dequeue(&queue));
-
-    enqueue(&queue, 40);
-    printf("Front element: %d\n", front(&queue));
-    printf("Dequeued: %d\n", dequeue(&queue));
-    printf("Dequeued: %d\n", dequeue(&queue));
-
-    if (isQueueEmpty(&queue)) {
-        printf("Queue is empty.\n");
+        switch (choice) {
+            case 1:
+                printf("Enter value to enqueue: ");
+                scanf("%d", &value);
+                enqueue(&queue, value);
+                break;
+            case 2:
+                value = dequeue(&queue);
+                if (value != -1) {
+                    printf("Dequeued value: %d\n", value);
+                }
+                break;
+            case 3:
+                value = front(&queue);
+                if (value != -1) {
+                    printf("Front element: %d\n", value);
+                }
+                break;
+            case 4:
+                if (isQueueEmpty(&queue)) {
+                    printf("Queue is empty.\n");
+                } else {
+                    printf("Queue is not empty.\n");
+                }
+                break;
+            case 5:
+                printf("Exiting...\n");
+                return 0;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
     }
 
     return 0;
