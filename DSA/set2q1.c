@@ -90,9 +90,9 @@ void reverseList(struct Node** head) {
     struct Node* current = *head;
     struct Node* next = NULL;
     while (current != NULL) {
-        next = current->next;  // Store next node
-        current->next = prev;  // Reverse the current node
-        prev = current;        // Move pointers one position ahead
+        next = current->next;  
+        current->next = prev;  
+        prev = current;       
         current = next;
     }
     *head = prev;
@@ -111,32 +111,56 @@ void printList(struct Node* head) {
 // Main function to demonstrate the operations
 int main() {
     struct Node* head = NULL;
+    int choice, data, position;
 
-    // Inserting nodes at specific positions
-    insertNode(&head, 10, 0);  // Insert 10 at position 0
-    insertNode(&head, 20, 1);  // Insert 20 at position 1
-    insertNode(&head, 30, 2);  // Insert 30 at position 2
-    insertNode(&head, 40, 1);  // Insert 40 at position 1
+    while (1) {
+        printf("\nMenu:\n");
+        printf("1. Insert a node\n");
+        printf("2. Delete a node\n");
+        printf("3. Print the list\n");
+        printf("4. Count nodes\n");
+        printf("5. Reverse print the list\n");
+        printf("6. Reverse the list\n");
+        printf("7. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-    printf("Original list: \n");
-    printList(head);
-
-    // Counting the number of nodes
-    printf("Number of nodes: %d\n", countNodes(head));
-
-    // Reverse printing the linked list
-    printf("Reverse print: \n");
-    reversePrint(head);
-
-    // Deleting a node from a specific position
-    deleteNode(&head, 2);  // Delete node at position 2
-    printf("List after deleting node at position 2: \n");
-    printList(head);
-
-    // Reversing the linked list
-    reverseList(&head);
-    printf("Reversed list: \n");
-    printList(head);
+        switch (choice) {
+            case 1:
+                printf("Enter the data to insert: ");
+                scanf("%d", &data);
+                printf("Enter the position to insert at: ");
+                scanf("%d", &position);
+                insertNode(&head, data, position);
+                break;
+            case 2:
+                printf("Enter the position to delete: ");
+                scanf("%d", &position);
+                deleteNode(&head, position);
+                break;
+            case 3:
+                printf("Linked list: ");
+                printList(head);
+                break;
+            case 4:
+                printf("Number of nodes: %d\n", countNodes(head));
+                break;
+            case 5:
+                printf("Reverse print: ");
+                reversePrint(head);
+                break;
+            case 6:
+                reverseList(&head);
+                printf("Reversed list: ");
+                printList(head);
+                break;
+            case 7:
+                printf("Exiting...\n");
+                return 0;
+            default:
+                printf("Invalid choice, try again.\n");
+        }
+    }
 
     return 0;
 }
