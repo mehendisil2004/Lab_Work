@@ -1,9 +1,6 @@
 #include <stdio.h>
 
-#define rows 4
-#define cols 5
-
-void nonzero(int matrix[rows][cols]) {
+void nonzero(int rows, int cols, int matrix[rows][cols]) {
     for (int i = 0; i < rows; i++) {
         int count = 0;
         for (int j = 0; j < cols; j++) {
@@ -16,14 +13,26 @@ void nonzero(int matrix[rows][cols]) {
 }
 
 int main() {
-    int matrix[rows][cols] = {
-        {0, 0, 0, 0, 5},
-        {0, 0, 0, 0, 0},
-        {0, 3, 0, 0, 0},
-        {1, 0, 0, 0, 0}
-    };
+    int rows, cols;
 
-    nonzero(matrix);
+    // Input the dimensions of the matrix
+    printf("Enter the number of rows: ");
+    scanf("%d", &rows);
+    printf("Enter the number of columns: ");
+    scanf("%d", &cols);
+
+    int matrix[rows][cols];
+
+    // Input the matrix elements
+    printf("Enter the elements of the %dx%d matrix:\n", rows, cols);
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            printf("Enter element at position (%d, %d): ", i + 1, j + 1);
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+
+    nonzero(rows, cols, matrix);
 
     return 0;
 }
