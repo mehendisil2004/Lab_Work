@@ -24,7 +24,7 @@ class stack {
 }
 
 class main {
-    public static void main(String[] args) {
+    public static void main(String args[]) {
         stack s = new stack(30);
         s.push(10);
         s.push(20);
