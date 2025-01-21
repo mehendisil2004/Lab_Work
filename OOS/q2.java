@@ -25,7 +25,7 @@ class student {
 }
 
 class main {
-    public static void main(String[] args) {
+    public static void main(String args[]) {
         student s1 = new student("Mehendi", 90, 85, 95);
 
         s1.display();
