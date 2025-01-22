@@ -200,3 +200,204 @@ wget https://example.com/file.zip
 curl -O https://example.com/file.zip
 ```
 `curl` supports a wide range of protocols, making it an invaluable tool for fetching, uploading, and managing data over the Internet.
+
+
+## a. Stream Socket
+
+> server.cpp
+
+```bash
+#include <iostream>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <unistd.h>
+#include <cstring>
+
+int main() {
+    int server_fd, new_socket;
+    struct sockaddr_in address;
+    int opt = 1;
+    int addrlen = sizeof(address);
+    char buffer[1024] = {0};
+
+    server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons(8080);
+
+    bind(server_fd, (struct sockaddr *)&address, sizeof(address));
+    listen(server_fd, 3);
+
+    new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t *)&addrlen);
+    read(new_socket, buffer, 1024);
+    std::cout << "Message from client: " << buffer << std::endl;
+
+    send(new_socket, "Hello from server", 17, 0);
+    close(new_socket);
+    return 0;
+}
+```
+> client.cpp
+
+```bash
+#include <iostream>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <cstring>
+
+int main() {
+    int sock = 0;
+    struct sockaddr_in serv_addr;
+    char buffer[1024] = {0};
+
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_port = htons(8080);
+
+    inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr);
+    connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
+
+    send(sock, "Hello from client", 17, 0);
+    read(sock, buffer, 1024);
+    std::cout << "Message from server: " << buffer << std::endl;
+
+    close(sock);
+    return 0;
+}
+```
+## b. Datagram Socket
+
+> server.cpp
+
+```bash
+#include <iostream>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <cstring>
+
+int main() {
+    int sockfd;
+    char buffer[1024];
+    struct sockaddr_in servaddr, cliaddr;
+
+    sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_addr.s_addr = INADDR_ANY;
+    servaddr.sin_port = htons(8080);
+
+    bind(sockfd, (const struct sockaddr *)&servaddr, sizeof(servaddr));
+
+    socklen_t len = sizeof(cliaddr);
+    recvfrom(sockfd, buffer, 1024, MSG_WAITALL, (struct sockaddr *)&cliaddr, &len);
+    std::cout << "Message from client: " << buffer << std::endl;
+
+    sendto(sockfd, "Hello from server", 17, MSG_CONFIRM, (const struct sockaddr *)&cliaddr, len);
+    return 0;
+}
+```
+> client.cpp
+
+```bash
+#include <iostream>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <cstring>
+
+int main() {
+    int sockfd;
+    char buffer[1024];
+    struct sockaddr_in servaddr;
+
+    sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_port = htons(8080);
+    inet_pton(AF_INET, "127.0.0.1", &servaddr.sin_addr);
+
+    sendto(sockfd, "Hello from client", 17, MSG_CONFIRM, (const struct sockaddr *)&servaddr, sizeof(servaddr));
+
+    socklen_t len = sizeof(servaddr);
+    recvfrom(sockfd, buffer, 1024, MSG_WAITALL, (struct sockaddr *)&servaddr, &len);
+    std::cout << "Message from server: " << buffer << std::endl;
+
+    return 0;
+}
+```
+
+## c. Raw socket
+> raw.cpp
+```bash
+#include <iostream>
+#include <cstring>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <netinet/ip_icmp.h>
+#include <unistd.h>
+#include <netinet/in.h>
+#include <cstdlib>
+
+unsigned short checksum(void *b, int len) {
+    unsigned short *buf = (unsigned short *)b;
+    unsigned int sum = 0;
+    unsigned short result;
+
+    for (sum = 0; len > 1; len -= 2) {
+        sum += *buf++;
+    }
+    if (len == 1) {
+        sum += *(unsigned char *)buf;
+    }
+    sum = (sum >> 16) + (sum & 0xFFFF);
+    sum += (sum >> 16);
+    result = ~sum;
+    return result;
+}
+
+int main() {
+    int sockfd;
+    char buffer[1024];
+    struct sockaddr_in dest_addr;
+    struct icmp icmp_header;
+
+    sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
+    if (sockfd < 0) {
+        perror("Socket creation failed");
+        exit(EXIT_FAILURE);
+    }
+
+    dest_addr.sin_family = AF_INET;
+    dest_addr.sin_addr.s_addr = inet_addr("8.8.8.8"); // Replace with the destination IP
+
+    icmp_header.icmp_type = ICMP_ECHO;
+    icmp_header.icmp_code = 0;
+    icmp_header.icmp_cksum = 0;
+    icmp_header.icmp_id = getpid();
+    icmp_header.icmp_seq = 1;
+
+    icmp_header.icmp_cksum = checksum(&icmp_header, sizeof(icmp_header));
+
+    if (sendto(sockfd, &icmp_header, sizeof(icmp_header), 0,
+               (struct sockaddr *)&dest_addr, sizeof(dest_addr)) < 0) {
+        perror("Failed to send packet");
+        close(sockfd);
+        exit(EXIT_FAILURE);
+    }
+    std::cout << "ICMP Echo Request sent to 8.8.8.8" << std::endl;
+
+    socklen_t addr_len = sizeof(dest_addr);
+    if (recvfrom(sockfd, buffer, sizeof(buffer), 0,
+                 (struct sockaddr *)&dest_addr, &addr_len) < 0) {
+        perror("Failed to receive packet");
+        close(sockfd);
+        exit(EXIT_FAILURE);
+    }
+    std::cout << "ICMP Echo Reply received from 8.8.8.8" << std::endl;
+
+    close(sockfd);
+    return 0;
+}
+```
