@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Validation</title>
+    <script>
+        function validateForm(e) {
+            e.preventDefault(); 
+            
+            var fName = document.getElementById("fName").value;
+            var lName = document.getElementById("lName").value;
+            var address = document.getElementById("address").value;
+            var pass = document.getElementById("pass").value;
+            var email = document.getElementById("email").value;
+            var mobile = document.getElementById("mobile").value;
+
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid E-mail ID.");
+                return false;
+            }
+
+            if (!/^\d{10}$/.test(mobile)) {
+                alert("Mobile Number must be exactly 10 digits.");
+                return false;
+            }
+
+            if (lName.trim() === "" || address.trim() === "") {
+                alert("Last Name and Address cannot be empty.");
+                return false;
+            }
+
+            alert("Form Validated Successfully!");
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h2>Registration Form</h2>
+    <form onsubmit="return validateForm(event)">
+        First Name: <input type="text" id="fName" ><br><br>
+        Last Name: <input type="text" id="lName"><br><br>
+        Address: <textarea id="address"></textarea><br><br>
+        Password: <input type="password" id="pass" placeholder="Min 6 chars"><br><br>
+        Email: <input type="text" id="email" placeholder="name@domain.com"><br><br>
+        Mobile: <input type="text" id="mobile" placeholder="10 digits"><br><br>
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>

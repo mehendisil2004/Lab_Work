@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Q6 CSS Demo</title>
+    <style>
+        .font1 { font-family: 'Courier New', monospace; font-style: italic; }
+        .font2 { font-family: 'Arial', sans-serif; font-weight: bold; text-transform: uppercase; }
+
+        .bg-box {
+            width: 300px;
+            height: 150px;
+            border: 2px solid black;
+            margin-bottom: 20px;
+            background-image: radial-gradient(circle, red 10%, transparent 11%); 
+            background-size: 50px 50px; 
+        }
+        .repeat { background-repeat: repeat; }
+        .no-repeat { background-repeat: no-repeat; background-color: #eee; }
+
+        a { text-decoration: none; font-size: 20px; margin: 10px; }
+        a.custom:link { color: blue; }
+        a.custom:visited { color: purple; }
+        a.custom:hover { color: red; font-weight: bold; text-decoration: underline; }
+        a.custom:active { color: green; }
+
+        .help-cursor { cursor: help; }
+        .wait-cursor { cursor: wait; }
+        .pointer-cursor { cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>CSS Styling Demo</h1>
+
+    <h3>a) Font Styles</h3>
+    <p class="font1">This is Courier New, Italic.</p>
+    <p class="font2">This is Arial, Bold, Uppercase.</p>
+
+    <h3>b) Background Repeat Control</h3>
+    <p>Repeat:</p>
+    <div class="bg-box repeat"></div>
+    <p>No-Repeat:</p>
+    <div class="bg-box no-repeat"></div>
+
+    <h3>c) Link Styles</h3>
+    <a href="#" class="custom">Hover over me!</a>
+
+    <h3>d) Custom Cursors</h3>
+    <button class="help-cursor">Help Cursor</button>
+    <button class="wait-cursor">Wait Cursor</button>
+    <button class="pointer-cursor">Pointer Cursor</button>
+</body>
+</html>

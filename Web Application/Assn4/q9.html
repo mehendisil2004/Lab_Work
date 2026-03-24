@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Application</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+        }
+        .quiz-container {
+            width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 8px 15px;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Simple Quiz App</h2>
+
+<div class="quiz-container">
+    <div id="question"></div>
+    <div id="options"></div>
+    <button onclick="nextQuestion()" style="background-color: green; color: white;">
+        Next
+    </button>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "Which language runs in the browser?",
+            options: ["Java", "C", "Python", "JavaScript"],
+            correct: 3
+        },
+        {
+            question: "What does CSS stand for?",
+            options: [
+                "Creative Style Sheets",
+                "Cascading Style Sheets",
+                "Colorful Style Sheets",
+                "Computer Style Sheets"
+            ],
+            correct: 1
+        },
+        {
+            question: "Which tag is used for JavaScript in HTML?",
+            options: ["<script>", "<js>", "<javascript>", "<code>"],
+            correct: 0
+        }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let selectedOption = null;
+
+    const questionEl = document.getElementById("question");
+    const optionsEl = document.getElementById("options");
+
+    function loadQuestion() {
+        selectedOption = null;
+        const currentQuiz = quizData[currentQuestion];
+
+        questionEl.innerHTML = "<h3>" + currentQuiz.question + "</h3>";
+
+        optionsEl.innerHTML = "";
+
+        currentQuiz.options.forEach((option, index) => {
+            const button = document.createElement("button");
+            button.innerText = option;
+            button.onclick = function() {
+                selectedOption = index;
+                highlightSelection(button);
+            };
+            optionsEl.appendChild(button);
+        });
+    }
+
+    function highlightSelection(selectedBtn) {
+        const buttons = optionsEl.querySelectorAll("button");
+        buttons.forEach(btn => btn.style.backgroundColor = "");
+        selectedBtn.style.backgroundColor = "#add8e6";
+    }
+
+    function nextQuestion() {
+        if (selectedOption === null) {
+            alert("Please select an answer!");
+            return;
+        }
+
+        if (selectedOption === quizData[currentQuestion].correct) {
+            score++;
+        }
+
+        currentQuestion++;
+
+        if (currentQuestion < quizData.length) {
+            loadQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        document.querySelector(".quiz-container").innerHTML =
+            "<h3>Quiz Completed!</h3>" +
+            "<p>Your Score: " + score + " / " + quizData.length + "</p>";
+    }
+
+    loadQuestion();
+</script>
+
+</body>
+</html>

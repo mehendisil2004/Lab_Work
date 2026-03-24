@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<input type="number" id="num" placeholder="Enter a number">
+<button onclick="checkEvenOdd()">Check</button>
+
+<p id="result"></p>
+
+<script>
+function checkEvenOdd() {
+    let n = document.getElementById("num").value;
+
+    if (n % 2 == 0) {
+        document.getElementById("result").innerHTML = "Even Number";
+    } else {
+        document.getElementById("result").innerHTML = "Odd Number";
+    }
+}
+</script>
+
+</body>
+</html>

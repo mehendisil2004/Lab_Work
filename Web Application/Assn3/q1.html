@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Q1: Number to Words</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .error { color: red; font-weight: bold; }
+        .success { color: green; font-weight: bold; font-size: 1.2em; }
+    </style>
+    <script>
+        function convertNumber() {
+            var numStr = document.getElementById("numInput").value;
+            var output = document.getElementById("output");
+
+            if (!/^\d{1,3}$/.test(numStr)) {
+                output.className = "error";
+                output.innerText = "Error: Please enter a valid number between 0 and 999.";
+                return;
+            }
+
+            var num = parseInt(numStr);
+            if (num < 0 || num > 999) {
+                output.className = "error";
+                output.innerText = "Error: Number out of range (0-999).";
+                return;
+            }
+
+            var units = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
+            var teens = ["Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+            var tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+
+            var str = "";
+
+            if (num === 0) {
+                output.className = "success";
+                output.innerText = "Zero";
+                return;
+            }
+
+            if (Math.floor(num / 100) > 0) {
+                str += units[Math.floor(num / 100)] + " Hundred ";
+                num %= 100;
+            }
+
+            if (num >= 10 && num < 20) {
+                str += teens[num - 10];
+            } else {
+                if (Math.floor(num / 10) > 0) {
+                    str += tens[Math.floor(num / 10)] + " ";
+                    num %= 10;
+                }
+                if (num > 0) {
+                    str += units[num];
+                }
+            }
+
+            output.className = "success";
+            output.innerText = str;
+        }
+    </script>
+</head>
+<body>
+    <h2>Number to Words Converter</h2>
+    <input type="text" id="numInput" placeholder="Enter 0-999">
+    <button onclick="convertNumber()">Convert</button>
+    <p id="output"></p>
+</body>
+</html>

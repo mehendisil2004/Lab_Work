@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        input {
+            display: block;
+            margin-bottom: 5px;
+            padding: 8px;
+            width: 250px;
+        }
+        button {
+            padding: 8px 15px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Registration Form</h2>
+
+<form id="registrationForm">
+    <label>Name:</label>
+    <input type="text" id="name">
+    <div class="error" id="nameError"></div>
+
+    <label>Email:</label>
+    <input type="text" id="email">
+    <div class="error" id="emailError"></div>
+
+    <label>Password:</label>
+    <input type="password" id="password">
+    <div class="error" id="passwordError"></div>
+
+    <label>Confirm Password:</label>
+    <input type="password" id="confirmPassword">
+    <div class="error" id="confirmPasswordError"></div>
+
+    <button type="submit">Register</button>
+</form>
+
+<script>
+document.getElementById("registrationForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+
+    let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    let passwordPattern = /^(?=.*[A-Z])(?=.*[0-9]).{8,}$/;
+
+    document.getElementById("nameError").innerHTML = "";
+    document.getElementById("emailError").innerHTML = "";
+    document.getElementById("passwordError").innerHTML = "";
+    document.getElementById("confirmPasswordError").innerHTML = "";
+
+    let isValid = true;
+
+    if (name === "") {
+        document.getElementById("nameError").innerHTML = "Name cannot be empty";
+        isValid = false;
+    }
+
+    if (!emailPattern.test(email)) {
+        document.getElementById("emailError").innerHTML = "Enter a valid email address";
+        isValid = false;
+    }
+
+    if (!passwordPattern.test(password)) {
+        document.getElementById("passwordError").innerHTML =
+            "Password must be at least 8 characters, include 1 uppercase letter and 1 number";
+        isValid = false;
+    }
+
+    if (password !== confirmPassword) {
+        document.getElementById("confirmPasswordError").innerHTML =
+            "Passwords do not match";
+        isValid = false;
+    }
+
+    if (isValid) {
+        alert("Registration Successful!");
+        document.getElementById("registrationForm").reset();
+    }
+});
+</script>
+
+</body>
+</html>

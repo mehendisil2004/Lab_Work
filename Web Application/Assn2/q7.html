@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="para">I love Barbie dolls.</p>
+<button onclick="toggleText()">Show/Hide</button>
+
+<script>
+function toggleText() {
+    let p = document.getElementById("para");
+
+    if (p.style.display === "none") {
+        p.style.display = "block";
+    } else {
+        p.style.display = "none";
+    }
+}
+</script>
+
+</body>
+</html>

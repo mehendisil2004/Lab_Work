@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Live Search Filter</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 50px;
+    }
+    input {
+      padding: 10px;
+      width: 250px;
+      margin-bottom: 20px;
+    }
+    li {
+      list-style: none;
+      background: #f2f2f2;
+      margin: 5px auto;
+      padding: 8px;
+      width: 250px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Live Search Filter</h2>
+
+  <input type="text" id="searchBox" placeholder="Search items..." onkeyup="filterList()">
+
+  <ul id="itemList"></ul>
+
+  <script>
+    const items = [
+      "Apple", "Banana", "Mango", "Orange", "Grapes",
+      "Pineapple", "Watermelon", "Cherry", "Papaya", "Strawberry"
+    ];
+
+    function displayList(list) {
+      const ul = document.getElementById("itemList");
+      ul.innerHTML = "";
+
+      list.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        ul.appendChild(li);
+      });
+    }
+
+    function filterList() {
+      const query = document.getElementById("searchBox").value.toLowerCase();
+
+      const filtered = items.filter(item =>
+        item.toLowerCase().includes(query)
+      );
+
+      displayList(filtered);
+    }
+
+    displayList(items);
+  </script>
+
+</body>
+</html>

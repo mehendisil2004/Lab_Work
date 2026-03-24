@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Tech Fest 2026</title>
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f4f4f4; }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+        }
+
+        nav { background: #333; overflow: hidden; }
+        nav a { float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none; }
+        nav a:hover { background-color: #ddd; color: black; }
+
+        .container { padding: 20px; max-width: 1000px; margin: auto; }
+
+        .card {
+            background: white;
+            border-radius: 15px; 
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2); 
+            
+            transition: transform 0.3s ease, background-color 0.3s; 
+        }
+
+        .card:hover {
+            transform: scale(1.02); 
+            background-color: #f9f9ff;
+        }
+
+        footer {
+            background-color: #333; color: white; text-align: center; padding: 10px;
+            position: fixed; bottom: 0; width: 100%;
+        }
+
+        @media screen and (max-width: 600px) {
+            nav a { float: none; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🚀 Tech Fest 2026</h1>
+        <p>Innovate. Integrate. Inspire.</p>
+    </header>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Events</a>
+        <a href="#">Register</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h2>About the Event</h2>
+            <p>Join us for the biggest college technical fest of the year! Experience hackathons, robotics, and coding challenges.</p>
+        </div>
+
+        <div class="card">
+            <h2>Featured Workshop</h2>
+            <p><strong>Web Development Bootcamp:</strong> Learn HTML5, CSS3, and JavaScript in this hands-on session.</p>
+            <button onclick="alert('Registered!')" style="padding:10px; cursor:pointer;">Register Now</button>
+        </div>
+    </div>
+
+    <br><br><br> <footer>
+        <p>&copy; 2026 College Tech Club</p>
+    </footer>
+
+</body>
+</html>

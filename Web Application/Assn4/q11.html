@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dark Light Theme Toggle</title>
+    <style>
+        body {
+            font-family: Arial;
+            transition: 0.3s;
+        }
+
+        body.light {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        body.dark {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        button {
+            padding: 8px 15px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="light">
+
+<h2>Theme Toggle Example</h2>
+<p>This theme preference is saved even after refresh.</p>
+
+<button onclick="toggleTheme()">Toggle Theme</button>
+
+<script>
+    window.onload = function () {
+        let savedTheme = localStorage.getItem("theme");
+
+        if (savedTheme) {
+            document.body.className = savedTheme;
+        }
+    };
+
+    function toggleTheme() {
+        document.body.classList.toggle("dark");
+        document.body.classList.toggle("light");
+
+        if (document.body.classList.contains("dark")) {
+            localStorage.setItem("theme", "dark");
+        } else {
+            localStorage.setItem("theme", "light");
+        }
+    }
+</script>
+
+</body>
+</html>

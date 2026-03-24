@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculator with History</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 50px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+    }
+    #history {
+      margin-top: 20px;
+    }
+    li {
+      list-style: none;
+      background: #f2f2f2;
+      margin: 5px auto;
+      padding: 8px;
+      width: 250px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Simple Calculator</h2>
+
+  <input type="number" id="num1" placeholder="Enter first number">
+  <input type="number" id="num2" placeholder="Enter second number">
+
+  <br>
+
+  <button onclick="calculate('+')">+</button>
+  <button onclick="calculate('-')">−</button>
+  <button onclick="calculate('*')">×</button>
+  <button onclick="calculate('/')">÷</button>
+
+  <h3>Result: <span id="result">0</span></h3>
+
+  <h3>Last 5 Calculations</h3>
+  <ul id="history"></ul>
+
+  <script>
+    let historyArr = [];
+
+    function calculate(operator) {
+      const num1 = parseFloat(document.getElementById("num1").value);
+      const num2 = parseFloat(document.getElementById("num2").value);
+
+      if (isNaN(num1) || isNaN(num2)) {
+        alert("Please enter valid numbers!");
+        return;
+      }
+
+      let result;
+
+      switch (operator) {
+        case '+':
+          result = num1 + num2;
+          break;
+        case '-':
+          result = num1 - num2;
+          break;
+        case '*':
+          result = num1 * num2;
+          break;
+        case '/':
+          if (num2 === 0) {
+            alert("Cannot divide by zero!");
+            return;
+          }
+          result = num1 / num2;
+          break;
+      }
+
+      document.getElementById("result").textContent = result;
+
+      const record = `${num1} ${operator} ${num2} = ${result}`;
+      historyArr.unshift(record); 
+      
+      if (historyArr.length > 5) {
+        historyArr.pop();
+      }
+
+      updateHistory();
+    }
+
+    function updateHistory() {
+      const historyList = document.getElementById("history");
+      historyList.innerHTML = "";
+
+      historyArr.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        historyList.appendChild(li);
+      });
+    }
+  </script>
+
+</body>
+</html>

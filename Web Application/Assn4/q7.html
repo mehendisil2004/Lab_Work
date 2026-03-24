@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login with LocalStorage</title>
+    <style>
+        body {
+            font-family: Arial;
+        }
+        #welcomeSection {
+            display: none;
+        }
+        button {
+            padding: 6px 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>User Login</h2>
+
+<div id="loginSection">
+    <label>Username:</label>
+    <input type="text" id="username">
+    <br>
+    <button onclick="login()">Login</button>
+</div>
+
+<div id="welcomeSection">
+    <h3 id="welcomeMessage"></h3>
+    <button onclick="logout()">Logout</button>
+</div>
+
+<script>
+    window.onload = function() {
+        let storedUser = localStorage.getItem("username");
+
+        if (storedUser) {
+            showWelcome(storedUser);
+        }
+    };
+
+    function login() {
+        let username = document.getElementById("username").value.trim();
+
+        if (username === "") {
+            alert("Please enter username");
+            return;
+        }
+
+        localStorage.setItem("username", username);
+
+        showWelcome(username);
+    }
+
+    function showWelcome(username) {
+        document.getElementById("loginSection").style.display = "none";
+        document.getElementById("welcomeSection").style.display = "block";
+        document.getElementById("welcomeMessage").innerText =
+            "Welcome back, " + username + "!";
+    }
+
+    function logout() {
+        localStorage.removeItem("username");
+
+        document.getElementById("welcomeSection").style.display = "none";
+        document.getElementById("loginSection").style.display = "block";
+        document.getElementById("username").value = "";
+    }
+</script>
+
+</body>
+</html>

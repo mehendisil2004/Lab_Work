@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<input type="number" id="n1" placeholder="Number 1">
+<input type="number" id="n2" placeholder="Number 2">
+<input type="number" id="n3" placeholder="Number 3">
+
+<button onclick="findLargest()">Find Largest</button>
+
+<p id="result"></p>
+
+<script>
+function findLargest() {
+    let a = parseInt(document.getElementById("n1").value);
+    let b = parseInt(document.getElementById("n2").value);
+    let c = parseInt(document.getElementById("n3").value);
+
+    let largest;
+
+    if (a >= b && a >= c) {
+        largest = a;
+    } else if (b >= a && b >= c) {
+        largest = b;
+    } else {
+        largest = c;
+    }
+
+    document.getElementById("result").innerHTML = "Largest: " + largest;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Character Limit Checker</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 50px;
+        }
+        textarea {
+            width: 400px;
+            height: 120px;
+            padding: 10px;
+            font-size: 14px;
+        }
+        #counter {
+            margin-top: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Real-Time Character Limit Checker</h2>
+
+<textarea id="message" maxlength="200" placeholder="Type your message (Max 200 characters)"></textarea>
+
+<div id="counter">200 characters remaining</div>
+
+<script>
+    const textarea = document.getElementById("message");
+    const counter = document.getElementById("counter");
+    const maxLength = 200;
+
+    textarea.addEventListener("input", function () {
+        let currentLength = textarea.value.length;
+
+        if (currentLength > maxLength) {
+            textarea.value = textarea.value.substring(0, maxLength);
+            currentLength = maxLength;
+        }
+
+        let remaining = maxLength - currentLength;
+
+        counter.textContent = remaining + " characters remaining";
+
+        if (remaining <= 20) {
+            counter.style.color = "red";
+        } else {
+            counter.style.color = "black";
+        }
+    });
+</script>
+
+</body>
+</html>

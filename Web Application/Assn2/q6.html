@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<input type="number" id="m1" placeholder="Subject 1">
+<input type="number" id="m2" placeholder="Subject 2">
+<input type="number" id="m3" placeholder="Subject 3">
+
+<button onclick="calculate()">Calculate</button>
+
+<p id="result"></p>
+
+<script>
+function calculate() {
+    let m1 = parseInt(document.getElementById("m1").value);
+    let m2 = parseInt(document.getElementById("m2").value);
+    let m3 = parseInt(document.getElementById("m3").value);
+
+    let total = m1 + m2 + m3;
+    let avg = total / 3;
+
+    let res = (avg >= 40) ? "Pass" : "Fail";
+
+    document.getElementById("result").innerHTML =
+        "Total: " + total + "<br>Average: " + avg + "<br>Result: " + res;
+}
+</script>
+
+</body>
+</html>

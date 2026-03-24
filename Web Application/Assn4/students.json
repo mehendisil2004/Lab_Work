@@ -1,0 +1,6 @@
+[
+  { "id": 1, "name": "Mehendi", "age": 21, "course": "BE" },
+  { "id": 2, "name": "Saswata", "age": 22, "course": "BTech" },
+  { "id": 3, "name": "Ramit", "age": 21, "course": "BE" },
+  { "id": 4, "name": "Tanish", "age": 20, "course": "BTech" }
+]

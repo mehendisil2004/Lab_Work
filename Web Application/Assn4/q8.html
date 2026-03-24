@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Slider</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+        }
+        img {
+            width: 400px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        button {
+            padding: 8px 15px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Image Slider</h2>
+
+<img id="slider" src="" alt="Slider Image">
+
+<br>
+
+<button onclick="prevImage()">Previous</button>
+<button onclick="nextImage()">Next</button>
+
+<script>
+    const images = [
+        "https://picsum.photos/id/1015/400/250",
+        "https://picsum.photos/id/1016/400/250",
+        "https://picsum.photos/id/1018/400/250",
+        "https://picsum.photos/id/1020/400/250"
+    ];
+
+    let currentIndex = 0;
+    const slider = document.getElementById("slider");
+
+    slider.src = images[currentIndex];
+
+    function showImage(index) {
+        slider.src = images[index];  
+    }
+
+    function nextImage() {
+        currentIndex++;
+        if (currentIndex >= images.length) {
+            currentIndex = 0;
+        }
+        showImage(currentIndex);
+    }
+
+    function prevImage() {
+        currentIndex--;
+        if (currentIndex < 0) {
+            currentIndex = images.length - 1;
+        }
+        showImage(currentIndex);
+    }
+
+    setInterval(function() {
+        nextImage();
+    }, 3000);
+
+</script>
+
+</body>
+</html>

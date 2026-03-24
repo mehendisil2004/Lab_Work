@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<button onclick="countClick()">Click Me</button>
+
+<p id="count">Count: 0</p>
+
+<script>
+let c = 0;
+
+function countClick() {
+    c++;
+    document.getElementById("count").innerHTML = "Count: " + c;
+}
+</script>
+
+</body>
+</html>

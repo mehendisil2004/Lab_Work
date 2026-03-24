@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<button onclick="showDateTime()">Show Date & Time</button>
+
+<p id="output"></p>
+
+<script>
+function showDateTime() {
+    let now = new Date();
+
+    let days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+    let day = days[now.getDay()];
+
+    document.getElementById("output").innerHTML =
+        "Date: " + now.toLocaleDateString() + "<br>" +
+        "Time: " + now.toLocaleTimeString() + "<br>" +
+        "Day: " + day;
+}
+</script>
+
+</body>
+</html>
